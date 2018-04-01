@@ -1,18 +1,28 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { MatButtonModule, MatCardModule, MatFormFieldModule, MatSelectModule, MatToolbarModule } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
+import { BackTrackingService } from './core/back-tracking.service';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+
+    MatCardModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatFormFieldModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ BackTrackingService ],
+  bootstrap: [ AppComponent ],
 })
 export class AppModule { }
