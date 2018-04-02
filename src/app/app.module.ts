@@ -5,12 +5,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { BackTrackingService } from './core/back-tracking.service';
+import { PegDirective } from './core/peg.directive';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    PegDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,94 @@
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 70 70"
+   id="svg8">
+  <g
+      inkscape:label="MajorXGridlines"
+      id="g16123">
+    <path
+        d="M 10,20 V 50"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorXDiv1"
+        id="path16111"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 20,0 V 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorXDiv2"
+        id="path16113"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 30,0 V 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorXDiv3"
+        id="path16115"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 40,0 V 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorXDiv4"
+        id="path16117"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 50,0 V 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorXDiv5"
+        id="path16119"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 60,20 V 50"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorXDiv6"
+        id="path16121"
+        inkscape:connector-curvature="0" />
+  </g>
+  <g
+      inkscape:label="MajorYGridlines"
+      id="g16137">
+    <path
+        d="M 20,10 H 50"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorYDiv1"
+        id="path16125"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 0,20 H 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorYDiv2"
+        id="path16127"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 0,30 H 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorYDiv3"
+        id="path16129"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 0,40 H 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorYDiv4"
+        id="path16131"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 0,50 H 70"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorYDiv5"
+        id="path16133"
+        inkscape:connector-curvature="0" />
+    <path
+        d="M 20,60 H 50"
+        style="fill:none;stroke:#000000;stroke-width:0.52916664"
+        inkscape:label="MajorYDiv6"
+        id="path16135"
+        inkscape:connector-curvature="0" />
+  </g>
+  <rect
+      height="70"
+      style="fill:none;stroke:#000000;stroke-width:0.79374999"
+      width="70"
+      x="0"
+      y="0"
+      inkscape:label="Border"
+      id="rect16139" />
+</svg>
