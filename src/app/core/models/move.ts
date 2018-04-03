@@ -1,4 +1,4 @@
-import { Direction, DirIndex, directions } from './direction';
+import { Direction, DirIndex } from './direction';
 
 export class Move {
   toX = 0;

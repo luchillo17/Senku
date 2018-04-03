@@ -1,0 +1,10 @@
+<mat-card>
+  <svg viewBox='0 0 70 70' preserveAspectRatio="xMinYMin meet">
+    <svg:use xlink:href='assets/Grid.svg#svg8'></svg:use>
+    <svg:g *ngFor='let row of matrix'>
+      <svg:g *ngFor='let cell of row'>
+        <svg:circle appPeg  [pegCell]='cell'></svg:circle>
+      </svg:g>
+    </svg:g>
+  </svg>
+</mat-card>

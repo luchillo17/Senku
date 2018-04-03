@@ -1,27 +1,5 @@
 <mat-toolbar>Peg Solitaire</mat-toolbar>
 
-<mat-card>
-  <svg width='500px' height='500px' viewBox='0 0 70 70' preserveAspectRatio="xMinYMin meet">
-    <svg:use xlink:href='assets/Grid.svg#svg8'></svg:use>
-    <svg:g *ngFor='let row of matrix'>
-      <svg:g *ngFor='let cell of row'>
-        <svg:circle appPeg  [pegCell]='cell'></svg:circle>
-      </svg:g>
-    </svg:g>
-  </svg>
+<app-board></app-board>
 
-</mat-card>
-
-<mat-card>
-
-  <mat-form-field>
-    <mat-select placeholder='Select board type' (valueChange)='setBoard($event)'>
-      <mat-option *ngFor='let option of boardOptions' [value]='option.value'>
-        {{ option.key }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <button mat-button (click)='backTracking.solve()'>Solve</button>
-
-</mat-card>
+<app-controls></app-controls>

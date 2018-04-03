@@ -1,0 +1,10 @@
+:host {
+  grid-area: controls;
+
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card {
+  flex: 1;
+}

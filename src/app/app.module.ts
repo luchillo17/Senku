@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { BackTrackingService } from './core/back-tracking.service';
 import { PegDirective } from './core/peg.directive';
+import { BoardComponent } from './board/board.component';
+import { ControlsComponent } from './controls/controls.component';
 
 
 
@@ -13,6 +15,8 @@ import { PegDirective } from './core/peg.directive';
   declarations: [
     AppComponent,
     PegDirective,
+    BoardComponent,
+    ControlsComponent,
   ],
   imports: [
     BrowserModule,

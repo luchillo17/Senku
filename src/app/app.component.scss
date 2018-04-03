@@ -1,0 +1,27 @@
+$gridGapSize: 10px;
+$childAreaSize: 500 + (24 * 2);
+$desktopMinSize: "#{$childAreaSize * 2}px" + $gridGapSize;
+
+:host {
+  height: 100%;
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-rows: 64px 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+
+  grid-template-areas:
+    "header header"
+    "board controls"
+    "board controls";
+
+  @media screen and (max-width: 700px) {
+    grid-template-areas:
+      "header header"
+      "board board"
+      "controls controls";
+  }
+}
+
+mat-toolbar {
+  grid-area: header;
+}

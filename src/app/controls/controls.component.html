@@ -1,0 +1,13 @@
+<mat-card>
+
+  <mat-form-field>
+    <mat-select placeholder='Select board type' (valueChange)='setBoard($event)'>
+      <mat-option *ngFor='let option of boardOptions' [value]='option.value'>
+        {{ option.key }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-flat-button color='primary' (click)='backTracking.solve()'>Solve</button>
+
+</mat-card>

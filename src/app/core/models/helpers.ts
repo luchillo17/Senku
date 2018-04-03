@@ -1,4 +1,4 @@
-import { CellState } from '../../../assets/base-boards';
+import { CellState } from './base-boards';
 
 export function getBoardPegCount(matrix: Matrix): number {
   let pegs = 0;
