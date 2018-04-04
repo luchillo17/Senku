@@ -1,6 +1,6 @@
 import { Directive, HostBinding, Input, OnInit } from '@angular/core';
 
-import { Cell } from './models';
+import { calculateCCord, Cell } from './models';
 
 @Directive({
   selector: '[appPeg]',
@@ -16,12 +16,12 @@ export class PegDirective implements OnInit {
 
   @HostBinding('attr.cx')
   public get cx(): number {
-    return this.pegCell.x * this.distance + this.offset;
+    return calculateCCord(this.pegCell.x);
   }
 
   @HostBinding('attr.cy')
   public get cy(): number {
-    return this.pegCell.y * this.distance + this.offset;
+    return calculateCCord(this.pegCell.y);
   }
 
   @HostBinding('attr.r')
@@ -29,9 +29,6 @@ export class PegDirective implements OnInit {
 
   @Input()
   pegCell: Cell;
-
-  private offset = 5;
-  private distance = 10;
 
   constructor() {}
 

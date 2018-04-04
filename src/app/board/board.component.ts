@@ -1,18 +1,19 @@
 import { animate, AnimationBuilder, AnimationFactory, AnimationPlayer, style } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
-import { chunk } from 'lodash';
+import { chunk, cloneDeep } from 'lodash';
 import { from } from 'rxjs/observable/from';
+import { fromPromise } from 'rxjs/observable/fromPromise';
 import { zip } from 'rxjs/observable/zip';
-import { concatMap } from 'rxjs/operators';
+import { concatMap, first, tap } from 'rxjs/operators';
 
-import { BackTrackingService, Cell, Move, PegDirective } from '../core';
+import { BackTrackingService, calculateCCord, Cell, Move, PegDirective } from '../core';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: [ './board.component.scss' ],
 })
-export class BoardComponent implements AfterViewInit {
+export class BoardComponent {
   @ViewChildren(PegDirective, { read: ElementRef })
   public set pegsList(pegList: QueryList<ElementRef>) {
     this.pegs = chunk(pegList.map((pegRef) => pegRef.nativeElement), 7);
@@ -32,16 +33,18 @@ export class BoardComponent implements AfterViewInit {
   ) {
     backTracking.matrixSubject
       .subscribe((matrix) => {
-        this.matrix = matrix;
+        this.matrix = cloneDeep(matrix);
       });
 
     backTracking.animateSubject.subscribe(this.animateMoves);
+    backTracking.resetSubject.subscribe(this.reset);
   }
 
-  ngAfterViewInit() {
-    console.log('====================================');
-    console.log(this.pegs);
-    console.log('====================================');
+  reset = () => {
+    this.backTracking
+      .matrixSubject
+      .pipe(first())
+      .subscribe((matrix) => this.matrix = cloneDeep(matrix));
   }
 
   animateMoves = () => {
@@ -49,7 +52,7 @@ export class BoardComponent implements AfterViewInit {
       concatMap((move) => this.animateMove(move)),
     ).subscribe(() => {
       console.log('====================================');
-      console.log('Moves animated');
+      console.log('Moves animation finished');
       console.log('====================================');
     });
   }
@@ -63,46 +66,51 @@ export class BoardComponent implements AfterViewInit {
 
   animatePeg = (move: Move) => {
     const animation = this.builder.build([
-      animate('300ms ease-out', style({ transform: `translateY(${'5px'})` })),
+      animate('400ms ease-out', style({
+        cx: `${calculateCCord(move.toX)}px`,
+        cy: `${calculateCCord(move.toY)}px`,
+      })),
     ]);
 
     return this.animateCell(
-      this.movePlayer,
       this.pegs[ move.y ][ move.x ],
       animation,
-    );
+      true,
+    ).pipe(tap(() => {
+      this.matrix[move.y][move.x].peg = false;
+      this.matrix[move.toY][move.toX].peg = true;
+    }));
   }
 
   animateDelete = (move: Move) => {
     const animation = this.builder.build([
-      animate('300ms ease-out', style({ opacity: 0 })),
+      animate('400ms ease-out', style({ opacity: 0 })),
     ]);
 
     return this.animateCell(
-      this.deletePlayer,
       this.pegs[ move.deleteY ][ move.deleteX ],
       animation,
-    );
+      false,
+    ).pipe(tap(() => {
+      this.matrix[move.deleteY][move.deleteX].peg = false;
+    }));
   }
 
-  animateCell = (player: AnimationPlayer, peg: SVGCircleElement, animation: AnimationFactory) => {
-    return new Promise((resolve, reject) => {
+  animateCell = (peg: SVGCircleElement, animation: AnimationFactory, isMoveAnimation: boolean) => {
+    return fromPromise(new Promise((resolve, reject) => {
 
-      console.log('====================================');
-      console.log('Player: ', player);
-      console.log('====================================');
-
-      let oldPlayer = player;
+      let oldPlayer = isMoveAnimation ? this.movePlayer : this.deletePlayer;
 
       // Create player for move animation & play
-      player = animation.create(peg);
+      const player = animation.create(peg);
       player.play();
-      player.onDone(() => {
-        console.log('====================================');
-        console.log('AnimationDone');
-        console.log('====================================');
-        resolve();
-      });
+      player.onDone(resolve);
+
+      if (isMoveAnimation) {
+        this.movePlayer = player;
+      } else {
+        this.deletePlayer = player;
+      }
 
       /**
        * Destroy old players, order is important,
@@ -112,6 +120,6 @@ export class BoardComponent implements AfterViewInit {
         oldPlayer.destroy();
         oldPlayer = null;
       }
-    });
+    }));
   }
 }

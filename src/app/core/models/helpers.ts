@@ -11,3 +11,9 @@ export function getBoardPegCount(matrix: Matrix): number {
   }
   return pegs;
 }
+
+export function calculateCCord(c: number) {
+  const distance = 10;
+  const offset = 5;
+  return c * distance + offset;
+}
