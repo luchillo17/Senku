@@ -1,10 +1,21 @@
 :host {
-  grid-area: controls;
-
   display: flex;
   flex-direction: column;
 }
 
 mat-card {
   flex: 1;
+  display: grid;
+  grid-gap: 5px;
+  grid-template:
+    "buttons moves" 1fr
+    / 1fr 1fr;
+
+  .buttons {
+    grid-area: buttons;
+  }
+
+  .moves {
+    grid-area: moves;
+  }
 }

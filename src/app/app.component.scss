@@ -25,3 +25,10 @@ $desktopMinSize: "#{$childAreaSize * 2}px" + $gridGapSize;
 mat-toolbar {
   grid-area: header;
 }
+
+app-board {
+  grid-area: board;
+}
+app-controls {
+  grid-area: controls;
+}

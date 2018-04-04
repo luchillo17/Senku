@@ -1,11 +1,13 @@
-import { Directive, HostBinding, Input } from '@angular/core';
+import { Directive, HostBinding, Input, OnInit } from '@angular/core';
 
 import { Cell } from './models';
 
 @Directive({
   selector: '[appPeg]',
 })
-export class PegDirective {
+export class PegDirective implements OnInit {
+
+  @HostBinding('id') id = '';
 
   @HostBinding('style.display')
   public get display(): string {
@@ -30,6 +32,12 @@ export class PegDirective {
 
   private offset = 5;
   private distance = 10;
-  constructor() { }
+
+  constructor() {}
+
+  ngOnInit() {
+    this.id = `peg-${this.pegCell.x}-${this.pegCell.y}`;
+
+  }
 
 }

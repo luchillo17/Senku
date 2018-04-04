@@ -3,9 +3,12 @@ import { cloneDeep, each, shuffle, some } from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { boards, BoardTypes, Cell, CellState, directions, getBoardPegCount, Move } from './models';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class BackTrackingService {
+  solved = false;
+
   pegs = 0;
   boardPegs = 0;
   matrix: Matrix;
@@ -14,11 +17,15 @@ export class BackTrackingService {
 
   matrixSubject: BehaviorSubject<Cell[][]> = new BehaviorSubject(null);
 
+  resetSubject:   Subject<boolean> = new Subject();
+  animateSubject: Subject<boolean> = new Subject();
+
   constructor() {
     this.setBoard(BoardTypes.solitair);
   }
 
   setBoard(type: BoardTypes) {
+    this.solved = false;
     this.matrix = cloneDeep(boards[ type ]);
     this.pegs = getBoardPegCount(this.matrix);
     this.boardPegs = this.pegs;
@@ -41,7 +48,7 @@ export class BackTrackingService {
 
     const moves = this.getAllowedMoves();
 
-    const hasSolution = some(moves, this.recursiveMove);
+    this.solved = some(moves, this.recursiveMove);
 
     performance.mark('end');
     performance.measure('BackTracking', 'start', 'end');
@@ -51,7 +58,7 @@ export class BackTrackingService {
     performance.clearMeasures();
 
     console.log('====================================');
-    console.log('HasSolution: ', hasSolution);
+    console.log('HasSolution: ', this.solved);
     console.log('Duration: ', measure.duration);
     console.log('Moves: ', this.solution);
     console.log('====================================');

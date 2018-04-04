@@ -8,6 +8,7 @@ import { BackTrackingService, BoardTypes } from '../core';
   styleUrls: [ './controls.component.scss' ],
 })
 export class ControlsComponent {
+  defaultBoard = BoardTypes.solitair;
   boardOptions: { key: string, value: number }[];
 
   constructor(
@@ -25,5 +26,13 @@ export class ControlsComponent {
     console.log('MatSelect value changed: ', type);
     console.log('====================================');
     this.backTracking.printMatrix();
+  }
+
+  animate() {
+    this.backTracking.animateSubject.next(true);
+  }
+
+  reset() {
+    this.backTracking.resetSubject.next(true);
   }
 }
