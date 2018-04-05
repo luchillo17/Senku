@@ -1,9 +1,11 @@
 <mat-card>
+  <mat-card-title color='primary'>Board</mat-card-title>
+  <mat-card-subtitle color='accent' [style.opacity]='(backTracking.customizeSubject | async) ? 1 : 0'>Edit mode</mat-card-subtitle>
   <svg viewBox='0 0 70 70' preserveAspectRatio="xMinYMin meet">
     <svg:use xlink:href='assets/Grid.svg#svg8'></svg:use>
     <svg:g *ngFor='let row of matrix'>
       <svg:g *ngFor='let cell of row'>
-        <svg:circle appPeg  [pegCell]='cell'></svg:circle>
+        <svg:circle appPeg [editing]='backTracking.customizeSubject | async' [pegCell]='cell'></svg:circle>
       </svg:g>
     </svg:g>
   </svg>

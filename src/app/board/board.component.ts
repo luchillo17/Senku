@@ -1,12 +1,16 @@
 import { animate, AnimationBuilder, AnimationFactory, AnimationPlayer, style } from '@angular/animations';
-import { AfterViewInit, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { chunk, cloneDeep } from 'lodash';
 import { from } from 'rxjs/observable/from';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { zip } from 'rxjs/observable/zip';
-import { concatMap, first, tap } from 'rxjs/operators';
+import { concatMap, filter, first, tap } from 'rxjs/operators';
 
-import { BackTrackingService, calculateCCord, Cell, Move, PegDirective } from '../core';
+import { BackTrackingService, calculateCCord, Cell, CellState, Move, PegDirective } from '../core';
+
+interface CustomizeClasses {
+  neon: boolean;
+}
 
 @Component({
   selector: 'app-board',
@@ -19,9 +23,8 @@ export class BoardComponent {
     this.pegs = chunk(pegList.map((pegRef) => pegRef.nativeElement), 7);
   }
 
-  public movePlayer: AnimationPlayer;
-  public deletePlayer: AnimationPlayer;
-
+  private movePlayer: AnimationPlayer;
+  private deletePlayer: AnimationPlayer;
 
   pegs: SVGCircleElement[][];
 
@@ -38,6 +41,10 @@ export class BoardComponent {
 
     backTracking.animateSubject.subscribe(this.animateMoves);
     backTracking.resetSubject.subscribe(this.reset);
+
+    backTracking.customizeSubject.pipe(
+      filter((customizing) => !customizing),
+    ).subscribe(() => backTracking.setBoardFromMatrix(this.matrix));
   }
 
   reset = () => {
@@ -51,6 +58,9 @@ export class BoardComponent {
     from(this.backTracking.solution).pipe(
       concatMap((move) => this.animateMove(move)),
     ).subscribe(() => {
+      this.movePlayer.destroy();
+      this.deletePlayer.destroy();
+      this.movePlayer = this.deletePlayer = null;
       console.log('====================================');
       console.log('Moves animation finished');
       console.log('====================================');
@@ -66,6 +76,7 @@ export class BoardComponent {
 
   animatePeg = (move: Move) => {
     const animation = this.builder.build([
+      style({ zIndex: '9999' }),
       animate('400ms ease-out', style({
         cx: `${calculateCCord(move.toX)}px`,
         cy: `${calculateCCord(move.toY)}px`,
@@ -77,8 +88,8 @@ export class BoardComponent {
       animation,
       true,
     ).pipe(tap(() => {
-      this.matrix[move.y][move.x].peg = false;
-      this.matrix[move.toY][move.toX].peg = true;
+      this.matrix[move.y][move.x].peg = CellState.void;
+      this.matrix[move.toY][move.toX].peg = CellState.peg;
     }));
   }
 
@@ -92,7 +103,7 @@ export class BoardComponent {
       animation,
       false,
     ).pipe(tap(() => {
-      this.matrix[move.deleteY][move.deleteX].peg = false;
+      this.matrix[move.deleteY][move.deleteX].peg = CellState.void;
     }));
   }
 

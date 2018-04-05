@@ -2,6 +2,8 @@
 
   <!-- Button action list -->
   <mat-list class='buttons'>
+    <h3 mat-subHeader>Controls:</h3>
+
     <mat-list-item>
       <mat-form-field>
         <mat-select placeholder='Select board type' [value]='defaultBoard' (valueChange)='setBoard($event)'>
@@ -27,6 +29,22 @@
         Animate
       </button>
     </mat-list-item>
+
+    <mat-list-item *ngIf='backTracking.customizeSubject | async; else editBoard'>
+      <button mat-flat-button color='primary'
+        (click)='customize(false)'>
+        Save board
+      </button>
+    </mat-list-item>
+
+    <ng-template #editBoard>
+      <mat-list-item>
+        <button mat-flat-button color='primary'
+          (click)='customize(true)'>
+          Edit board
+        </button>
+      </mat-list-item>
+    </ng-template>
 
     <mat-list-item>
       <button mat-flat-button color='primary'

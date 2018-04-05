@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { cloneDeep, each, shuffle, some } from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 import { boards, BoardTypes, Cell, CellState, directions, getBoardPegCount, Move } from './models';
-import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class BackTrackingService {
@@ -19,6 +19,7 @@ export class BackTrackingService {
 
   resetSubject:   Subject<boolean> = new Subject();
   animateSubject: Subject<boolean> = new Subject();
+  customizeSubject: Subject<boolean> = new BehaviorSubject(false);
 
   constructor() {
     this.setBoard(BoardTypes.solitair);
@@ -34,9 +35,27 @@ export class BackTrackingService {
 
     const boardMatrix: Cell[][] = this.matrix
       .map((row, y) => row.map(
-        (peg, x) => new Cell(x, y, peg === CellState.peg),
+        (peg, x) => new Cell(x, y, peg),
       ));
     this.matrixSubject.next(boardMatrix);
+  }
+
+  setBoardFromMatrix = (matrix: Cell[][]) => {
+    this.solved = false;
+    this.matrix = matrix.map(
+      (row) => row.map((cell) => cell.peg),
+    );
+    this.pegs = getBoardPegCount(this.matrix);
+    this.boardPegs = this.pegs;
+    this.solution = [];
+    this.noSolutionMatrixes.clear();
+
+    const boardMatrix: Cell[][] = this.matrix
+      .map((row, y) => row.map(
+        (peg, x) => new Cell(x, y, peg),
+      ));
+    this.matrixSubject.next(boardMatrix);
+    this.printMatrix();
   }
 
   solve = () => {

@@ -1,7 +1,9 @@
+import { CellState } from '.';
+
 export class Cell {
   constructor(
     public x: number,
     public y: number,
-    public peg: boolean = true,
+    public peg: CellState = CellState.peg,
   ) { }
 }
