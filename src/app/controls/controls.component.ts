@@ -9,17 +9,27 @@ import { BackTrackingService, BoardTypes } from '../core';
 })
 export class ControlsComponent {
 
+  // Initial board setting from BoardTypes
   defaultBoard = BoardTypes.solitair;
   boardOptions: { key: string, value: number }[];
 
+  // Inject the BackTrackingService
   constructor(
     public backTracking: BackTrackingService,
   ) {
+
+    // Calculate boardOptions for select input based on available BoardTypes
     this.boardOptions = Object.keys(BoardTypes)
       .filter((key) => Number.isNaN(+key))
       .map((key) => ({ key, value: BoardTypes[ key ] }));
   }
 
+  /**
+   * Sets the board matrix based in the board type selected passed as parameter
+   *
+   * @param  {BoardTypes} type
+   * @returns void
+   */
   setBoard(type: BoardTypes) {
     this.backTracking.setBoard(type);
 
@@ -29,15 +39,32 @@ export class ControlsComponent {
     this.backTracking.printMatrix();
   }
 
+  /**
+   * On customize button click, set the custom board as the current type
+   * & emit customize event through BackTrackingService
+   *
+   * @param  {boolean} active
+   * @returns void
+   */
   customize(active: boolean) {
     this.defaultBoard = BoardTypes.custom;
     this.backTracking.customizeSubject.next(active);
   }
 
+  /**
+   * Send animate event through BackTrackingService
+   *
+   * @returns void
+   */
   animate() {
     this.backTracking.animateSubject.next(true);
   }
 
+  /**
+   * Send animate event through BackTrackingService
+   *
+   * @returns void
+   */
   reset() {
     this.backTracking.resetSubject.next(true);
   }

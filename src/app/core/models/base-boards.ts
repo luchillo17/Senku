@@ -1,3 +1,4 @@
+// Different initial BoardTypes ids contained in an enum
 export enum BoardTypes {
   cross,
   plus,
@@ -14,12 +15,14 @@ export enum BoardTypes {
   custom,
 }
 
+// Cell states, none means outside of board, void means no peg, peg means peg
 export const enum CellState {
   none = -1,
   void,
   peg,
 }
 
+// Board initial configurations the user can select
 export const boards = {
   [ BoardTypes.cross ]: [
     [ -1, -1, 0, 0, 0, -1, -1 ],

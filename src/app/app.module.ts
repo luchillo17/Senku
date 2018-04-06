@@ -5,6 +5,7 @@ import {
   MatFormFieldModule,
   MatListModule,
   MatSelectModule,
+  MatSnackBarModule,
   MatToolbarModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,7 @@ import { ControlsComponent } from './controls';
 import { BackTrackingService, PegDirective } from './core';
 
 
-
+// Application module, here we configure the app deps
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { BackTrackingService, PegDirective } from './core';
     MatSelectModule,
     MatButtonModule,
     MatToolbarModule,
+    MatSnackBarModule,
     MatFormFieldModule,
   ],
   providers: [ BackTrackingService ],
