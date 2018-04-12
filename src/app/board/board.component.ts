@@ -79,9 +79,6 @@ export class BoardComponent {
       this.movePlayer.destroy();
       this.deletePlayer.destroy();
       this.movePlayer = this.deletePlayer = null;
-      console.log('====================================');
-      console.log('Moves animation finished');
-      console.log('====================================');
     });
   }
 

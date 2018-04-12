@@ -10,7 +10,9 @@ mat-card {
   flex-direction: column;
   svg {
     flex: 1;
-    background: #69f0ae;
+    > rect {
+      fill: #69f0ae;
+    }
   }
 }
 

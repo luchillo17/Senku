@@ -27,7 +27,7 @@
     <!-- Animate button -->
     <mat-list-item>
       <button mat-flat-button color='primary'
-        [disabled]='!backTracking.solved'
+        [disabled]='!backTracking.solved || animated'
         (click)='animate()'>
         Animate
       </button>

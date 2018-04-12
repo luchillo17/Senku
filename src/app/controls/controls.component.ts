@@ -8,6 +8,8 @@ import { BackTrackingService, BoardTypes } from '../core';
   styleUrls: [ './controls.component.scss' ],
 })
 export class ControlsComponent {
+  // Initial states
+  animated = false;
 
   // Initial board setting from BoardTypes
   defaultBoard = BoardTypes.solitair;
@@ -32,6 +34,7 @@ export class ControlsComponent {
    */
   setBoard(type: BoardTypes) {
     this.backTracking.setBoard(type);
+    this.animated = false;
 
     console.log('====================================');
     console.log('MatSelect value changed: ', type);
@@ -49,6 +52,7 @@ export class ControlsComponent {
   customize(active: boolean) {
     this.defaultBoard = BoardTypes.custom;
     this.backTracking.customizeSubject.next(active);
+    this.animated = false;
   }
 
   /**
@@ -57,6 +61,7 @@ export class ControlsComponent {
    * @returns void
    */
   animate() {
+    this.animated = true;
     this.backTracking.animateSubject.next(true);
   }
 
@@ -67,5 +72,6 @@ export class ControlsComponent {
    */
   reset() {
     this.backTracking.resetSubject.next(true);
+    this.animated = false;
   }
 }
