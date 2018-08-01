@@ -29,7 +29,7 @@ export class BackTrackingService {
   constructor(
     public snackBar: MatSnackBar,
   ) {
-    this.setBoard(BoardTypes.solitair);
+    this.setBoard(BoardTypes.cross);
   }
 
   /**
